@@ -1,13 +1,23 @@
 import streamlit as st
 import pandas as pd
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Sayfa Yapılandırması
-st.set_page_config(page_title="İnciroğlu Otomotiv | Müşteri Takip Sistemi", layout="wide")
+st.set_page_config(page_title="İnciroğlu Otomotiv | Müşteri Takip", layout="wide")
 
-# Kurumsal Başlık
-st.markdown("<h1 style='text-align: center; color: #000000; font-family: sans-serif;'>İnciroğlu Otomotiv Müşteri Takip Sistemi</h1>", unsafe_allow_html=True)
+# Logolar ve Başlık
+col_logo1, col_logo2 = st.columns([1, 1])
+with col_logo1:
+    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/2048px-BMW.svg.png", width=150)
+with col_logo2:
+    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/BMW_Mini_logo.svg/2048px-BMW_Mini_logo.svg.png", width=150)
+
+st.markdown("""
+    <h1 style='text-align: center; color: #333333; font-family: Arial, sans-serif; margin-top: -20px;'>
+    İnciroğlu Otomotiv Müşteri Takip Sistemi
+    </h1>
+    """, unsafe_allow_html=True)
 
 # Hafıza Yönetimi
 if 'musteriler' not in st.session_state:
@@ -44,9 +54,9 @@ with st.form("yeni_kayit", clear_on_submit=True):
         yeni_kayit = pd.DataFrame([[yeni_id, tarih, isim, telefon, model, danisman, durum, test_surusu, ozet]], 
                                  columns=st.session_state.musteriler.columns)
         st.session_state.musteriler = pd.concat([st.session_state.musteriler, yeni_kayit], ignore_index=True)
-        st.success(f"Kayıt oluşturuldu! ID: {yeni_id}")
+        st.success(f"Kayıt başarılı! ID: {yeni_id}")
 
-# 2. Arama ve Düzenleme (Veri Düzenleyici)
+# 2. Arama ve Düzenleme
 st.markdown("---")
 arama = st.text_input("🔍 Müşteri Adı, Telefon veya Model ile Ara:")
 df = st.session_state.musteriler
@@ -56,14 +66,13 @@ if arama:
                                  arama.lower() in str(row['Telefon']).lower() or 
                                  arama.lower() in str(row['Model']).lower(), axis=1)]
 
-# Durum Güncelleme için Data Editor
-st.subheader("Müşteri Listesini Düzenle")
+st.subheader("Müşteri Listesi")
 edited_df = st.data_editor(df, use_container_width=True, hide_index=True)
 st.session_state.musteriler.update(edited_df)
 
-# 3. Hatırlatma Algoritması (3 Gün)
+# 3. Hatırlatma Algoritması
 st.markdown("---")
-st.subheader("⏰ 3 Günlük Takip Hatırlatıcısı")
+st.subheader("⏰ Takip Hatırlatıcısı (3+ Gün)")
 bugun = datetime.now()
 hatirlatma_listesi = []
 
@@ -73,8 +82,7 @@ for idx, row in st.session_state.musteriler.iterrows():
         hatirlatma_listesi.append(row)
 
 if hatirlatma_listesi:
-    hatirlatma_df = pd.DataFrame(hatirlatma_listesi)
-    st.warning("⚠️ Takip Süresi Dolan Müşteriler:")
-    st.dataframe(hatirlatma_df[['İsim', 'Telefon', 'Danışman', 'Özet']])
+    st.warning("⚠️ Takip süresi dolan müşterileriniz var!")
+    st.dataframe(pd.DataFrame(hatirlatma_listesi)[['İsim', 'Telefon', 'Danışman', 'Özet']])
 else:
     st.info("Takip süresi dolan bekleyen müşteriniz bulunmuyor.")
