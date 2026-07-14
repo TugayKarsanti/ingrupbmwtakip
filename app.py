@@ -6,12 +6,12 @@ from datetime import datetime
 # Sayfa Yapılandırması
 st.set_page_config(page_title="İnciroğlu Otomotiv | Müşteri Takip", layout="wide")
 
-# Logolar (Daha kararlı CDN linkleri kullanıldı)
+# Logolar (Yerel dosya kullanımı)
 col_logo1, col_logo2 = st.columns([1, 1])
 with col_logo1:
-    st.image("https://www.bmw.com/content/dam/bmw/common/images/brand-logo.png", width=100)
+    st.image("bmw.png", width=150)
 with col_logo2:
-    st.image("https://www.mini.com.tr/etc.clientlibs/mini/clientlibs/clientlib-base/resources/images/mini-logo.png", width=100)
+    st.image("mini.png", width=150)
 
 # Beyaz Başlık ve Arka Plan Stili
 st.markdown("""
