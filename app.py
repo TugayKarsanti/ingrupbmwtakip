@@ -6,17 +6,21 @@ from datetime import datetime
 # Sayfa Yapılandırması
 st.set_page_config(page_title="İnciroğlu Otomotiv | Müşteri Takip", layout="wide")
 
-# Logolar ve Başlık
+# Logolar
 col_logo1, col_logo2 = st.columns([1, 1])
 with col_logo1:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/2048px-BMW.svg.png", width=150)
+    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/BMW_logo_%28gray%29.svg/2048px-BMW_logo_%28gray%29.svg.png", width=150)
 with col_logo2:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/BMW_Mini_logo.svg/2048px-BMW_Mini_logo.svg.png", width=150)
+    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/MINI_logo.png/800px-MINI_logo.png", width=150)
 
+# Beyaz Başlık ve Arka Plan Stili
 st.markdown("""
-    <h1 style='text-align: center; color: #333333; font-family: Arial, sans-serif; margin-top: -20px;'>
-    İnciroğlu Otomotiv Müşteri Takip Sistemi
-    </h1>
+    <div style='background-color: #333333; padding: 15px; border-radius: 10px;'>
+        <h1 style='text-align: center; color: #FFFFFF; font-family: Arial, sans-serif;'>
+        İnciroğlu Otomotiv Müşteri Takip Sistemi
+        </h1>
+    </div>
+    <br>
     """, unsafe_allow_html=True)
 
 # Hafıza Yönetimi
@@ -52,7 +56,7 @@ with st.form("yeni_kayit", clear_on_submit=True):
         yeni_id = str(uuid.uuid4())[:8].upper()
         tarih = datetime.now().strftime("%Y-%m-%d")
         yeni_kayit = pd.DataFrame([[yeni_id, tarih, isim, telefon, model, danisman, durum, test_surusu, ozet]], 
-                                 columns=st.session_state.musteriler.columns)
+                                   columns=st.session_state.musteriler.columns)
         st.session_state.musteriler = pd.concat([st.session_state.musteriler, yeni_kayit], ignore_index=True)
         st.success(f"Kayıt başarılı! ID: {yeni_id}")
 
