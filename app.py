@@ -6,21 +6,20 @@ from datetime import datetime
 # Sayfa Yapılandırması
 st.set_page_config(page_title="İnciroğlu Otomotiv | Müşteri Takip", layout="wide")
 
-# Logolar
+# Logolar (Daha kararlı CDN linkleri kullanıldı)
 col_logo1, col_logo2 = st.columns([1, 1])
 with col_logo1:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/BMW_logo_%28gray%29.svg/2048px-BMW_logo_%28gray%29.svg.png", width=150)
+    st.image("https://www.bmw.com/content/dam/bmw/common/images/brand-logo.png", width=100)
 with col_logo2:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/MINI_logo.png/800px-MINI_logo.png", width=150)
+    st.image("https://www.mini.com.tr/etc.clientlibs/mini/clientlibs/clientlib-base/resources/images/mini-logo.png", width=100)
 
 # Beyaz Başlık ve Arka Plan Stili
 st.markdown("""
-    <div style='background-color: #333333; padding: 15px; border-radius: 10px;'>
+    <div style='background-color: #1a1a1a; padding: 20px; border-radius: 10px; margin-bottom: 20px;'>
         <h1 style='text-align: center; color: #FFFFFF; font-family: Arial, sans-serif;'>
         İnciroğlu Otomotiv Müşteri Takip Sistemi
         </h1>
     </div>
-    <br>
     """, unsafe_allow_html=True)
 
 # Hafıza Yönetimi
